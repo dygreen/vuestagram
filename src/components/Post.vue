@@ -4,7 +4,7 @@
       <div class="profile"></div>
       <span class="profile-name">{{ feeds.name }}</span>
     </div>
-    <div class="post-body" :style="{ backgroundImage : `url(${feeds.postImage})` }"></div>
+    <div :class="`${filterName} post-body`" :style="{ backgroundImage : `url(${feeds.postImage})` }"></div>
     <div class="post-content">
       <p>{{ feeds.likes }} Likes</p>
       <p><strong>{{ feeds.name }}</strong> {{ feeds.content }}</p>
@@ -17,6 +17,7 @@
 export default {
   props: {
     feeds: Object,
+    filterName: String
   }
 }
 </script>

@@ -4,20 +4,29 @@
       <li>Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li>Next</li>
+      <li v-if="tab === 1" @click="tab++">Next</li>
+      <li v-if="tab === 2" @click="publish">Post</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :feeds="feeds" />
+  <Container :feeds="feeds" :tab="tab" :url="url" :filterName="filterName" @writing="write = $event"/>
   <button @click="more">더보기</button>
 
   <div class="footer">
     <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
+      <input  @change="upload" type="file" id="file" class="inputfile" />
       <label for="file" class="input-plus">+</label>
     </ul>
   </div>
+
+<!--  <div v-if="tab === 0">내용0</div>
+  <div v-if="tab === 1">내용1</div>
+  <div v-if="tab === 2">내용2</div>
+  <button @click="tab = 0">버튼0</button>
+  <button @click="tab = 1">버튼1</button>
+  <button @click="tab = 2">버튼2</button>-->
+
 </template>
 
 <script>
@@ -30,8 +39,17 @@ export default {
   data(){
     return {
       feeds: feeds,
-      count: 0
+      count: 0,
+      tab: 0,
+      url: '',
+      write: '',
+      filterName : ''
     }
+  },
+  mounted() {
+    this.emitter.on('btnClick', (a) => {
+      this.filterName = a
+    });
   },
   components: {
     Container,
@@ -42,6 +60,27 @@ export default {
         this.feeds.push(result.data)
         this.count++
       })
+    },
+    upload(e){
+      let file = e.target.files
+      console.log(file)
+      this.url = URL.createObjectURL(file[0])
+      console.log(this.url) // blob:http://localhost:8080/505896e1-8f28-48fb-b29c-d3addd21af09 -> blob? binary 데이터(0과 1로 이루어진)를 다룰 때 BLOB이라는 object에 담아서 다룸
+      this.tab++
+    },
+    publish(){
+      let myPost = {
+        name: "Kim Hyun",
+        userImage: "https://placeimg.com/100/100/arch",
+        postImage: this.url,
+        likes: 36,
+        date: "May 15",
+        liked: false,
+        content: this.write,
+        filter: this.filterName
+      }
+      this.feeds.unshift(myPost)
+      this.tab = 0
     }
   }
 }
