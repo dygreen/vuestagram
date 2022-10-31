@@ -1,12 +1,12 @@
 <template>
-  <div class="post">
+  <div class="post" @click="$store.commit('likesControl')">
     <div class="post-header">
       <div class="profile"></div>
       <span class="profile-name">{{ feeds.name }}</span>
     </div>
     <div :class="`${filterName} post-body`" :style="{ backgroundImage : `url(${feeds.postImage})` }"></div>
     <div class="post-content">
-      <p>{{ feeds.likes }} Likes</p>
+      <p>{{ $store.state.likes }} Likes</p>
       <p><strong>{{ feeds.name }}</strong> {{ feeds.content }}</p>
       <p class="date">{{ feeds.date }}</p>
     </div>

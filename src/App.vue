@@ -10,6 +10,11 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
+  <!-- Vuex -->
+  <h4>안녕 {{ $store.state.name }} {{ $store.state.age }}</h4>
+  <button @click="$store.commit('changeName')">버튼</button>
+  <button @click="$store.commit('addAge', 10)">나이증가</button>
+
   <Container :feeds="feeds" :tab="tab" :url="url" :filterName="filterName" @writing="write = $event"/>
   <button @click="more">더보기</button>
 
@@ -19,13 +24,6 @@
       <label for="file" class="input-plus">+</label>
     </ul>
   </div>
-
-<!--  <div v-if="tab === 0">내용0</div>
-  <div v-if="tab === 1">내용1</div>
-  <div v-if="tab === 2">내용2</div>
-  <button @click="tab = 0">버튼0</button>
-  <button @click="tab = 1">버튼1</button>
-  <button @click="tab = 2">버튼2</button>-->
 
 </template>
 
