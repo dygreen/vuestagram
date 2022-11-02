@@ -15,6 +15,9 @@
   <button @click="$store.commit('changeName')">버튼</button>
   <button @click="$store.commit('addAge', 10)">나이증가</button>
 
+  <p>{{ $store.state.more }}</p>
+  <button @click="$store.dispatch('getData')">더보기</button>
+
   <Container :feeds="feeds" :tab="tab" :url="url" :filterName="filterName" @writing="write = $event"/>
   <button @click="more">더보기</button>
 
@@ -31,6 +34,7 @@
 import Container from './components/Container'
 import feeds from './assets/feeds'
 import axios from 'axios'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'App',
@@ -51,6 +55,14 @@ export default {
   },
   components: {
     Container,
+  },
+  computed : { // 일종의 '계산결과 저장공간'
+    now2(){
+      return this.$store.state.name
+    },
+    ...mapState(['name', 'age', 'likes']),
+    // ...mapState({ 내이름 : 'name' }),
+    ...mapMutations(['setMore', 'likesControl'])
   },
   methods: {
     more(){

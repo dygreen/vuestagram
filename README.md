@@ -53,4 +53,4 @@ publish(){
 ```
 * `<slot></slot>`으로 props 전송 없이 부모-자식 간 데이터 사용하기
 * `mitt`로 컴포넌트간 데이터 전송
-* `Vuex`로 데이터 관리 및 수정
+* `Vuex`로 데이터 관리 및 수정: `mutations`,`actions`,`computed`, `mapState`
